@@ -7,12 +7,12 @@ class Channel:
     """Класс для ютуб-канала"""
     # YT_API_KEY скопирован из гугла и вставлен в переменные окружения
     API_KEY: str = os.getenv('YT_API_KEY')
+    SERVICE = 'youtube'
 
     @classmethod
     def get_service(cls):
         """Возвращает объект для работы с YouTube API"""
-        youtube = build('youtube', 'v3', developerKey=cls.API_KEY)
-        return youtube
+        return build(cls.SERVICE, 'v3', developerKey=cls.API_KEY)
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
@@ -29,8 +29,40 @@ class Channel:
         self.view_count: int = int(self.channel_dict['items'][0]['statistics']['viewCount'])
 
     @property
-    def channel_id(self):
+    def channel_id(self) -> str:
         return self.__channel_id
+
+    def __str__(self) -> str:
+        """Строковое представление экземпляра класса"""
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other) -> int:
+        """Сумма числа подписчиков нескольких каналов"""
+        return self.subscribers + other.subscribers
+
+    def __sub__(self, other) -> int:
+        """Разность числа подписчиков нескольких каналов"""
+        return self.subscribers - other.subscribers
+
+    def __gt__(self, other) -> bool:
+        """Сравнение (больше) числа подписчиков нескольких каналов"""
+        return self.subscribers > other.subscribers
+
+    def __ge__(self, other) -> bool:
+        """Сравнение (больше либо равно) числа подписчиков нескольких каналов"""
+        return self.subscribers >= other.subscribers
+
+    def __lt__(self, other) -> bool:
+        """Сравнение (меньше) числа подписчиков нескольких каналов"""
+        return self.subscribers < other.subscribers
+
+    def __le__(self, other) -> bool:
+        """Сравнение (меньше либо равно) числа подписчиков нескольких каналов"""
+        return self.subscribers <= other.subscribers
+
+    def __eq__(self, other) -> bool:
+        """Проверяет равенство числа подписчиков нескольких каналов"""
+        return self.subscribers == other.subscribers
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
