@@ -1,9 +1,9 @@
-from src.channel import Channel
+from src.api_mixin import APIMixin
 import datetime
 import isodate
 
 
-class PlayList(Channel):
+class PlayList(APIMixin):
     """
     Класс для плейлиста с ютуб-канала.
     Наследуется от класса ютуб-канала, чтобы не дублировать атрибуты и методы получения данных по API с ютуба.
