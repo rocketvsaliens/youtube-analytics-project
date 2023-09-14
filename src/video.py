@@ -1,7 +1,7 @@
-from src.channel import Channel
+from src.api_mixin import APIMixin
 
 
-class Video(Channel):
+class Video(APIMixin):
     """
     Класс для видео с ютуб-канала.
     Наследуется от класса ютуб-канала, чтобы не дублировать атрибуты и методы получения данных по API с ютуба.
